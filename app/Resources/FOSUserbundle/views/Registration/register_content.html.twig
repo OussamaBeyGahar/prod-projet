@@ -1,0 +1,17 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+
+<div class="comment-top mt-5">
+    <h4>Enregistrer</h4>
+    <div class="comment-bottom w3pvtsinfo_mail_grid_right">
+        {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+                <div class="form-group">
+                    {{ form_widget(form) }}
+                </div>
+
+                <div class="nav-button">
+                    <input type="submit" value="{{ 'registration.submit'|trans }}" />
+                </div>
+        {{ form_end(form) }}
+    </div>
+</div>

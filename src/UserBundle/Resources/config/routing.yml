@@ -1,0 +1,27 @@
+admin_dashboard:
+    path:     /admin
+    defaults: { _controller: UserBundle:User:admin }
+
+table_dashboard:
+    path:     /admin/table
+    defaults: { _controller: UserBundle:User:afficher }
+
+comment_deletes:
+    path:     /admin/supprimerComment
+    defaults: { _controller: UserBundle:User:deleteComment }
+
+pay_deletes:
+    path:     /admin/supprimerPay
+    defaults: { _controller: UserBundle:User:deletepaiement }
+
+event_deletes:
+    path:     /admin/supprimer
+    defaults: { _controller: UserBundle:User:delete }
+
+table_PDF:
+    path:     /admin/PDF
+    defaults: { _controller: UserBundle:User:afficherPDF }
+
+_graphePie:
+    path: /admin/pie
+    defaults: { _controller: UserBundle:User:google}

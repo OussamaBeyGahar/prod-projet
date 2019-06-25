@@ -1,0 +1,43 @@
+activity_homepage:
+    path:     /
+    defaults: { _controller: ActivityBundle:Default:index }
+
+activity_activity_add:
+    path:     /add
+    defaults: { _controller: ActivityBundle:Activity:add }
+
+activity_activity_remove:
+    path:     /remove
+    defaults: { _controller: ActivityBundle:Activity:remove }
+
+activity_activity_display:
+    path:     /display
+    defaults: { _controller: ActivityBundle:Activity:display }
+
+activity_activity_single_display:
+    path:     /single
+    defaults: { _controller: ActivityBundle:Activity:single }
+
+activity_activity_single_likes_display:
+    path:     /singlelikes
+    defaults: { _controller: ActivityBundle:Activity:likes }
+
+activity_activity_single_deslikes_display:
+    path:     /singledeslikes
+    defaults: { _controller: ActivityBundle:Activity:deslikes }
+
+activity_activity_addrating:
+    path:     /addrating
+    defaults: { _controller: ActivityBundle:Activity:addrating }
+
+activity_activity_all:
+    path:     /all
+    defaults: { _controller: ActivityBundle:Activity:all }
+
+activity_activity_single_reports:
+    path:     /reports
+    defaults: { _controller: ActivityBundle:Activity:reports }
+
+activity_activity_admin:
+    path:     /admin
+    defaults: { _controller: ActivityBundle:Activity:admin }

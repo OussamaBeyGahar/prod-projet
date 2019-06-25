@@ -1,0 +1,128 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+
+    <!-- blog -->
+    <section class="wthree-row py-5">
+        <div class="container py-xl-5 py-lg-3">
+            <div class="row">
+            <div class="col-lg-4 blog-sldebar-right">
+                <div class="single-gd">
+                    <h4>Liste des participants</h4>
+                    <ul class="list-group">
+                    {% for participant in participants %}
+                        <li class="list-group-item active"> {{ participant.user.username }} </li>
+                    </ul>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-lg-8 blog-left-content mt-lg-0 mt-5">
+                <div class="creatives-grid">
+                    <a href="#">
+                        <img src="{{ asset('images/' ~ photo) }}" alt="{{ titre }}" class="img-fluid" />
+                    </a>
+                    <div class="p-mask img-thumbnail">
+                        <h4><a href="#">{{ titre|upper }}</a></h4>
+                        <span class="let mt-3">Partager le : {{ eventdate|date("jS F Y, \\a\\t g:ia") }}</span>
+                        <hr>
+                        <span class="let mt-3">Date Debut : {{ events.datedebut |date("jS F Y, \\a\\t g:ia") }}</span> <br>
+                        <span class="let mt-3">Date Fin : {{ events.datefin |date("jS F Y, \\a\\t g:ia") }}</span>
+                        <hr>
+                    </div>
+                </div>
+                <div class="top-cont">
+                    <h3 class="mt-5 mb-4">
+                        <a href="#" class="single-text text-dark font-weight-light">Lieu : {{ lieu }}</a>
+
+                    </h3>
+                    <p>{{ descripion | raw }}</p>
+
+
+                    <div class="media-body pt-xl-2 pl-3">
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+      {% if(events.datefin > date()) %}
+       {% if (nbParticipants >=  maxparticipants) %}
+            <a class="btn button-style-w3ls mt-4" href="#">Complet</a>
+      {% else %}
+        {% if (participants is empty) %}
+                <a class="btn button-style-w3ls mt-4" href="{{ path('ajouter_participant',{'id': id,'nbParticipants':nbParticipants}) }}">Participer</a>
+        {% else %}
+            {% for participant in participants %}
+                {% if participant.user.id == app.user.id %}
+                    <a class="btn button-style-w3ls mt-4" href="{{ path('supprimer_participant',{'id': id,'idp': participant.id,'nbParticipants':nbParticipants}) }}">annuler </a>
+                    {% set etat = 'true' %}
+                {% endif %}
+            {% endfor %}
+      {#  {% for participant in participants %} #}
+                {% if etat == 'false'   %}
+                    <a class="btn button-style-w3ls mt-4" href="{{ path('ajouter_participant',{'id': id,'nbParticipants':nbParticipants}) }}">Participer</a><br>
+                {% endif %}
+       {# {% endfor %} #}
+        {% endif %}
+       {% endif %}
+      {% else %}
+          <a class="btn button-style-w3ls mt-4" href="#">Evenement expiré</a>
+      {% endif %}
+      {% elseif is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %}
+    <br>
+
+    {% endif %}
+
+
+                    </div>
+
+
+
+
+
+                </div>
+
+                <h4>Comments</h4>
+                {% for comment in comments %}
+                    <div class="media">
+                        <img src="http://placehold.it/50x50" alt="" class="img-fluid" />
+                        <div class="media-body pt-xl-2 pl-3">
+                            <h5 class="mb-2">{{ comment.getUser().getUsername() }}</h5>
+                            <span class="let mt-3">{{ comment.getContent() }}</span> <br>
+                            <span class="let mt-2">{{ comment.getDatecomment|date("jS F Y, \\a\\t g:ia") }}</span><br>
+                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                {% if(comment.user.id == app.user.id) %}
+                                    <!-- Button trigger modal -->
+                                    <a class="btn button-style-w3ls mt-4" href="{{ path('delete_comment',{'id': comment.id}) }}">Supprimer</a>
+                                {% endif %}
+                            {% elseif is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %}
+                                <br>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+        </div>
+        <div class="container py-xl-5 py-lg-3">
+            <!-- comment form -->
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <div class="comment-top mt-5">
+                <h4>Leave a Comment</h4>
+                <div class="comment-bottom w3pvtsinfo_mail_grid_right">
+                    <form action="{{ path('add_comment',{'id': id}) }}" method="post" id="comment">
+                        <div class="form-group">
+								<textarea class="form-control" name="comment" placeholder="Comment here"
+                                          required=""></textarea>
+                        </div>
+                        <button type="submit" class="btn submit-button mt-4">Submit</button>
+                    </form>
+                </div>
+            </div>
+            {% endif %}
+            <!-- //comment form -->
+        </div>
+    </section>
+    <!-- //blog -->
+
+
+
+{% endblock %}

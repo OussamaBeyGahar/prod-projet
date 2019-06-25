@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+    <body>
+        <section class="blog_w3ls py-5" id="more">
+            <div class="container py-xl-5 py-lg-3">
+                <h3 class="tittle mb-sm-5 mb-4">You may also like</h3>
+                <div class="row">
+                    {% for list in liste %}
+                        <div class="col-lg-4 col-md-6 mt-4">
+                        <div class="med-blog">
+                            <div class="blog-header">
+                                <a href="blog1.html">
+                                    <img src="{{ asset('images/' ~ list.event.photo) }}" alt="{{ list.event.titre }}" class="img-fluid" />
+                                </a>
+                            </div>
+                            <div class="blog-body bg-wh p-4">
+                                <span>{{ list.event.titre }}</span>
+                                <hr>
+                                <span class="let mt-3">Date Debut : {{ list.event.datedebut |date("F jS \\a\\t g:ia") }}</span>
+                                <span class="let mt-3">Date Fin : {{ list.event.datefin |date("F jS \\a\\t g:ia") }}</span>
+                                <hr>
+                                <span>{{ list.event.description|trim }}</span>
+                                <a class="btn button-style-w3ls mt-4" href="{{ path('event_detail',{'id': list.event.id,'nbrVue':list.event.nbrVue}) }}">Afficher</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+
+    </body>
+
+
+
+{% endblock %}

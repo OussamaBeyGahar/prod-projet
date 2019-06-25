@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<div class="container py-xl-5 py-lg-3">
+    <div class="blog-left-content">
+        <div class="creatives-grid">
+            <a href="single.html">
+                <img src="/world_friendship/web/uploads/images/products/{{ activity.image }}" alt=" " class="img-fluid" style="margin: auto;display: table;" />
+            </a>
+            <div class="p-mask img-thumbnail">
+                <h4 style="color:red;">{{ activity.title }}</h4>
+
+
+
+                <span class="let mt-3">{{ activity.dateact|date }}</span>
+                {% if reportCheck == false %}
+                <a href="{{ path('activity_activity_single_reports',{'id':activity.id}) }} "><img src="{{ asset('images/claim.svg') }}" alt=" " style="width: 24px;height: 24px; float: right;"/> </a>
+                {% endif %}
+            <hr>
+                <p>{{ activity.description|raw }}</p>
+
+
+
+                <div class="single-gd">
+                    <h4 style="margin: auto;display: table;">Notes</h4>
+                    <ul class="list-group" style="margin-top: 10px;">
+                        {% for rat in rating %}
+                        <li class="list-group-item">Sécurité <span style="float: right">{% for i in 0..rat.security %}  <img src="{{ asset('images/star.svg') }}" alt=" " style="width: 24px;height: 24px; float: right;"/> {% endfor %}</span> </li>
+                        <li class="list-group-item">Beauté <span style="float: right"> {% for i in 0..rat.beauty %} <img src="{{ asset('images/star.svg') }}" alt=" " style="width: 24px;height: 24px; float: right;"/>{% endfor %}</span></li>
+                        <li class="list-group-item">Budget <span style="float: right"> {% for i in 0..rat.budget %}<img src="{{ asset('images/star.svg') }}" alt=" " style="width: 24px;height: 24px; float: right;"/>{% endfor %}</span></li>
+                        {% endfor %}
+                    </ul>
+                    {{ twitterButton() }}
+                </div>
+
+
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+
+                    {% if likes == true %}
+                        <a href="{{ path('activity_activity_single_likes_display',{'id':activity.id,'idact':activity.id}) }}"><img src="{{ asset('images/like.svg') }}" style="width: 32px;height: 32px;" alt=" " class="img-fluid" /></a>
+                        {% else %}
+                            <a href="{{ path('activity_activity_single_likes_display',{'id':activity.id,'idact':activity.id}) }}"><img src="{{ asset('images/likeb.svg') }}" style="width: 32px;height: 32px;" alt=" " class="img-fluid" /></a>
+                        {% endif %}
+
+                    {% if deslikes == true %}
+                        <a href="{{ path('activity_activity_single_deslikes_display',{'id':activity.id,'idact':activity.id}) }}" style="margin-left: 10px;"><img src="{{ asset('images/dislikeb.svg') }}" style="width: 32px;height: 32px;" alt=" " class="img-fluid" /></a>
+                    {% else %}
+                        <a href="{{ path('activity_activity_single_deslikes_display',{'id':activity.id,'idact':activity.id}) }}" style="margin-left: 10px;"><img src="{{ asset('images/dislike.svg') }}" style="width: 32px;height: 32px;" alt=" " class="img-fluid" /></a>
+                    {% endif %}
+                        {% if app.user.id ==  activity.iduser.id or is_granted('ROLE_ADMIN')%}
+                            <a href="{{ path('activity_activity_remove',{'id':activity.id,'idact':activity.id}) }}"><img src="{{ asset('images/trash.svg') }}" style="width: 32px;height: 32px;float: right;" alt=" " class="img-fluid" /></a>
+                        {% endif %}
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

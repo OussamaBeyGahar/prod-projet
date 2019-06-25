@@ -1,0 +1,49 @@
+friend_homepage:
+    path:     /
+    defaults: { _controller: FriendBundle:Default:index }
+event_ajout:
+    path:     /ajout
+    defaults: { _controller: FriendBundle:Event:ajout }
+event_afficher:
+    path:     /afficher
+    defaults: { _controller: FriendBundle:Event:afficher }
+event_update:
+    path:     /modifier
+    defaults: { _controller: FriendBundle:Event:update }
+event_detail:
+    path:     /detail
+    defaults: { _controller: FriendBundle:Event:detail }
+mesevents:
+    path:     /mesevents
+    defaults: { _controller: FriendBundle:Event:detail }
+event_delete:
+    path:     /supprimer
+    defaults: { _controller: FriendBundle:Event:delete }
+event_chercher:
+    path:     /chercher
+    defaults: { _controller: FriendBundle:Event:chercher }
+event_chercherlieu:
+    path:     /chercherlieu
+    defaults: { _controller: FriendBundle:Event:chercherlieu }
+add_comment:
+    path:     /addComment
+    defaults: { _controller: FriendBundle:Event:addComment }
+delete_comment:
+    path:     /deletecomment/{id}
+    defaults: { _controller: FriendBundle:Event:deleteComment }
+ajouter_participant:
+    path:     /addParticipant
+    defaults: { _controller: FriendBundle:Event:addParticipant }
+supprimer_participant:
+    path:     /dellParticipant
+    defaults: { _controller: FriendBundle:Event:AnnulerParticipation }
+paiement:
+    path:     /paiement
+    defaults: { _controller: FriendBundle:Event:paiement }
+
+all:
+    path:     /all
+    defaults: { _controller: FriendBundle:Event:all }
+find:
+    path:     /find/{id}
+    defaults: { _controller: FriendBundle:Event:find }

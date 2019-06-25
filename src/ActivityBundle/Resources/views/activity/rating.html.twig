@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+
+    {% block body %}
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+<div class="comment-top mt-5">
+        <h4>Noter Votre Activité</h4>
+        <div class="comment-bottom w3pvtsinfo_mail_grid_right">
+            {{ form_start(form) }}
+            <div class="form-group">
+                {{ form_row(form.security,{'attr':{'type':'choicetype','class':'form-control'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(form.beauty,{'attr':{'type':'choicetype','class':'form-control'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(form.budget,{'attr':{'type':'choicetype','class':'form-control'}}) }}
+            </div>
+            <div class="nav-button">
+                {{ form_row(form.Ajouter,{'attr':{'type':'text','class':'btn btn-common','placeholder':'Ajouter...'}}) }}
+            </div>
+
+            {{ form_end(form) }}
+    </div>
+</div>
+
+        {% endif %}
+    {% endblock %}
+

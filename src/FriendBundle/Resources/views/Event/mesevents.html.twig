@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
+
+    <div class="media">
+        <div class="col-lg-11">
+            {% for message in app.session.flashbag().get('status') %}
+                <div class="alert alert-sucess">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="clearfix"></div>
+
+    <!-- blog -->
+    <section class="wthree-row py-5">
+        <div class="container py-xl-5 py-lg-3">
+
+            <div class="blog-left-content">
+
+                <form action="" method="POST">
+                    <div class="form-group">
+                        <input type="text" name="titre" class="form-control" placeholder="Titre" required="">
+                    </div>
+                    <button type="submit" class="btn" value="chercher">Chercher</button>
+                </form>
+
+                </div>
+            <hr>
+            <div class="blog-left-content">
+                <div class="creatives-grid">
+                    <div class="p-mask img-thumbnail">
+                </div>
+                </div>
+                {% for events in event %}
+
+
+                 <div class="creatives-grid">
+                    <a href="#">
+                        <img src="{{ asset('images/' ~ events.photo) }}" alt="{{ events.titre }}" class="img-fluid" />
+                    </a>
+                    <div class="p-mask img-thumbnail">
+                        <h4><a href="#">{{ events.titre }}</a></h4>
+                        <i class="fas fa-user">Partager par : {{ events.creator.username }}</i></a>
+                        <span class="let mt-3">le : {{ events.eventdate|date("F jS \\a\\t g:ia") }}</span>
+                        <hr>
+                        <span class="let mt-3">Date Debut : {{ events.datedebut |date("F jS \\a\\t g:ia") }}</span> <br>
+                        <span class="let mt-3">Date Fin : {{ events.datefin |date("F jS \\a\\t g:ia") }}</span>
+                        <hr>
+                        <p>{{ events.description|trim }}</p>
+
+                        <a class="btn button-style-w3ls mt-4" href="{{ path('event_detail',{'id': events.id,'nbrVue':events.nbrVue}) }}">Afficher</a>
+
+                        {% if(events.datefin < date()) %}
+                            <a class="btn button-style-w3ls mt-4" href="#">Evenement expiré</a>
+                        {% endif %}
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                            {% if(events.creator.id == app.user.id) %}
+                                <a class="btn button-style-w3ls mt-4" href="{{ path('event_delete',{'id': events.id}) }}">Supprimer</a>
+                                <a class="btn button-style-w3ls mt-4" href="{{ path('event_update',{'id': events.id}) }}">Modifier</a>
+                                <a class="btn button-style-w3ls mt-4" href="{{ path('paiement',{'id': events.id}) }}">Promouvoir l'événement</a>
+                            {% endif %}
+                            {% elseif is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %}
+                            <br>
+
+                        {% endif %}
+
+                        <hr>
+                            <ul class="blog_meta list">
+                                <i class="fas fa-eye">{{ events.nbrVue }} Views</i>
+                                <i class="fas fa-walking">{{ events.nbParticipants }} Particiapnts</i>
+                            </ul>
+
+                    </div>
+
+
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- //blog -->
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+
+
+
+    <div class="comment-top mt-5">
+        <h4>Ajouter un Evenement</h4>
+        <div class="comment-bottom w3pvtsinfo_mail_grid_right">
+            {{ form_start(Form) }}
+            <div class="form-group">
+                {{ form_widget(Form.titre,{'attr':{'type':'text','class':'form-control','placeholder':'Title...'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_widget(Form.description,{'attr':{'type':'textarea','class':'form-control','placeholder':'Description...'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_widget(Form.lieu,{'attr':{'type':'text','class':'form-control','placeholder':'Lieu...'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_widget(Form.datedebut,{'attr':{'type':'time','class':'form-control','placeholder':'Date Debut...'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_widget(Form.datefin,{'attr':{'type':'text','class':'form-control','placeholder':'Date Fin...'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_widget(Form.maxparticipants,{'attr':{'type':'text','class':'form-control','placeholder':'Nombre des Participants...'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_widget(Form.photo,{'attr':{'type':'text','class':'form-control','placeholder':'photo...'}}) }}
+            </div>
+            <div class="nav-button">
+                {{ form_widget(Form.Submit,{'attr':{'type':'text','class':'btn btn-common','placeholder':'Submit...'}}) }}
+            </div>
+            {{ form_end(Form) }}
+        </div>
+    </div>
+
+    {% elseif is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %}
+        <div class="alert alert-danger" role="alert">
+            <h3> Pour Publier un Evenement devenez Membre
+                <a href="{{ path('fos_user_registration_register') }}">Inscription</a>
+                ou connectez-vous
+                <a href="{{ path('fos_user_security_login') }}">Login</a>
+            </h3>
+        </div>
+
+    {% endif %}
+
+    {% include '@FullCalendar/Calendar/calendar.html.twig' %}
+
+
+
+{% endblock %}

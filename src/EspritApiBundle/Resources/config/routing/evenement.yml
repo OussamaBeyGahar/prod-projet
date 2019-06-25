@@ -1,0 +1,3 @@
+get_project:
+    path:     /{id}
+    defaults: { _controller: EspritApiBundle:Task:liste}
