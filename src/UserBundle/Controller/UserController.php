@@ -2,6 +2,10 @@
 
 namespace UserBundle\Controller;
 
+use ActivityBundle\Entity\Activity;
+use ActivityBundle\Entity\Likes;
+use ActivityBundle\Entity\Reports;
+use AppBundle\Entity\User;
 use CMEN\GoogleChartsBundle\GoogleCharts\Charts\PieChart;
 use FriendBundle\Entity\Comment;
 use FriendBundle\Entity\Event;
@@ -15,8 +19,20 @@ class UserController extends Controller
 {
     public function adminAction(Request $request)
     {
-
-        return $this->render('@User/Admin/base2.html.twig');
+        $usersn = $this->getDoctrine()->getRepository(User::class)->userscount();
+        $cntlikes = $this->getDoctrine()->getRepository(Likes::class)->countlikes();
+        $cntact = $this->getDoctrine()->getRepository(Activity::class)->countact();
+        $sumact = $this->getDoctrine()->getRepository(Activity::class)->sumvu();
+        $usrs = $this->getDoctrine()->getRepository(User::class)->findBy(['enabled' => false]);
+        $mostreported = $this->getDoctrine()->getRepository(Activity::class)-> mostreported();
+        $sumrep = $this->getDoctrine()->getRepository(Reports::class)->countreports();
+        return $this->render('@User/Admin/base2.html.twig',  array('usrs'=>$usersn,
+            'likes'=>$cntlikes,
+            'act'=>$cntact,
+            'sumact'=>$sumact,
+            'usrall'=>$usrs,
+            'reported'=>$mostreported,
+            'sumrep'=>$sumrep));
     }
 
     public function afficherAction(Request $request)
@@ -148,5 +164,35 @@ class UserController extends Controller
 
                 }
 
+    public function delactAction(Request $request){
+        //creation d'un objet
+        $id=$request->get('id');
+        $activity=$this->getDoctrine()->getRepository(Activity::class)->find($id);
+        $id=$activity->getIduser();
+        $usr=$this->getDoctrine()->getManager()
+            ->getRepository(User::class)
+            ->find($id);
+        $usr->setEnabled(false);
+        $aaaa = new User();
+
+        $em=$this->getDoctrine()->getManager();
+        $em->remove($activity);
+        $em->persist($usr);
+        $em->flush();
+
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Your Account has been Disabled')
+            ->setFrom('oussama.beygahar@sports4africa.com')
+            ->setTo($usr->getEmail())
+            ->setBody('Your account has been disabled duo bad publish of an activity');
+
+        $this->get('mailer')->send($message);
+
+
+        return $this->redirectToRoute('admin_dashboard');
+
+
+
+    }
 
 }

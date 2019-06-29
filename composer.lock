@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a21458b7798efd650fe73b153f8f428e",
+    "content-hash": "9920479bd6302a8a2588decd64891cfe",
     "packages": [
         {
             "name": "ancarebeca/full-calendar-bundle",

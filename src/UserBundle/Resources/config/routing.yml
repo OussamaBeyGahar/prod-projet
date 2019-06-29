@@ -25,3 +25,7 @@ table_PDF:
 _graphePie:
     path: /admin/pie
     defaults: { _controller: UserBundle:User:google}
+
+comment_act:
+    path:     /admin/delact
+    defaults: { _controller: UserBundle:User:delact }

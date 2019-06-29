@@ -41,3 +41,8 @@ activity_activity_single_reports:
 activity_activity_admin:
     path:     /admin
     defaults: { _controller: ActivityBundle:Activity:admin }
+
+activity_activity_apidisplay:
+    path:     /apidisplay
+    defaults: { _controller: ActivityBundle:Activity:apidisplay }
+

@@ -10,7 +10,7 @@
                         {% for m in list  %}
                         <div class="creatives-grid">
                             <a href="{{ path('activity_activity_single_display',{'id':m.id}) }}">
-                                <img src="/world_friendship/web/uploads/images/products/{{ m.image }}" alt=" " class="img-fluid" />
+                                <img src="/uploads/images/products/{{ m.image }}" alt=" " class="img-fluid" />
                             </a>
                             <div class="p-mask img-thumbnail">
                                 <h4><a href="{{ path('activity_activity_single_display',{'id':m.id}) }}">{{ m.title }}</a></h4>
@@ -18,11 +18,15 @@
                                 <hr>
                                 <a class="btn button-style-w3ls mt-4" href="{{ path('activity_activity_single_display',{'id':m.id}) }}">Read More</a>
                                 <div style="float: right;"> <span style="margin-right: 5px">{{ m.nbvue }}</span>
-                                    <img src="{{ asset('images/eye.svg') }}" alt=" " style="width: 24px;height: 24px; float: right;"/> </div>
+                                    <img src="{{ asset('images/eye.svg') }}" alt=" " style="width: 24px;height: 24px; float: right;"/>
+                                </div>
 
                             </div>
                         </div>
                         {% endfor %}
+                        <div class="navigation">
+                            {{ knp_pagination_render(list) }}
+                        </div>
                     </div>
                     <div class="col-lg-4 blog-sldebar-right mt-lg-0 mt-5">
                         <div class="single-gd">
@@ -39,14 +43,14 @@
                                 <div class="blog-grids">
                                     <div class="blog-grid-left">
                                         <a href="{{ path('activity_activity_single_display',{'id':l.id}) }}">
-                                            <img src="/world_friendship/web/uploads/images/products/{{ l.image }}" class="img-fluid" alt="">
+                                            <img src="/uploads/images/products/{{ l.image }}" class="img-fluid" alt="">
                                         </a>
                                     </div>
                                     <div class="blog-grid-right">
                                         <h5>
                                             <a href="{{ path('activity_activity_single_display',{'id':l.id}) }}">{{ l.Title }}</a>
                                         </h5>
-                                        {{ l.Description[:50] ~ '...'  }}
+                                        {{ l.Description|raw }}
                                     </div>
                                     <div class="clearfix"> </div>
                                 </div>
@@ -59,14 +63,14 @@
                                 <div class="blog-grids">
                                     <div class="blog-grid-left">
                                         <a href="{{ path('activity_activity_single_display',{'id':li.id}) }}">
-                                            <img src="/world_friendship/web/uploads/images/products/{{ li.image }}" class="img-fluid" alt="">
+                                            <img src="/uploads/images/products/{{ li.image }}" class="img-fluid" alt="">
                                         </a>
                                     </div>
                                     <div class="blog-grid-right">
                                         <h5>
-                                            <a href="{{ path('activity_activity_single_display',{'id':li.id}) }}">{{ li.Title }}</a>
+                                            <a href="{{ path('activity_activity_single_display',{'id':li.id}) }}">{{ li.title }}</a>
                                         </h5>
-                                        {{ li.Description[:50] ~ '...'  }}
+                                        {{ li.description|raw  }}
                                     </div>
                                     <div class="clearfix"> </div>
                                 </div>
@@ -100,7 +104,7 @@
                         <div class="med-blog">
                             <div class="blog-header">
                                 <a href="{{ path('activity_activity_single_display',{'id':r.id}) }}">
-                                    <img class="img-fluid" src="/world_friendship/web/uploads/images/products/{{ r.image }}" alt="image">
+                                    <img class="img-fluid" src="/uploads/images/products/{{ r.image }}" alt="image">
                                 </a>
                             </div>
                             <div class="blog-body bg-wh p-4">

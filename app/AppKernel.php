@@ -31,6 +31,7 @@ class AppKernel extends Kernel
             new ActivityBundle\ActivityBundle(),
             new Vich\UploaderBundle\VichUploaderBundle(),
             new Nomaya\SocialBundle\NomayaSocialBundle(),
+
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

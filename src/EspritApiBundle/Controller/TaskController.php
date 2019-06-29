@@ -2,6 +2,7 @@
 
 namespace EspritApiBundle\Controller;
 
+use ActivityBundle\Entity\Activity;
 use EspritApiBundle\Entity\Task;
 use FriendBundle\Entity\Event;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -67,7 +68,13 @@ class TaskController extends Controller
         return new JsonResponse($formatted);
     }
 
+    public function apidisplayAction(){
+        $tasks = $this->getDoctrine()->getRepository(Activity::class)->findAll();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($tasks);
+        return new JsonResponse($formatted);
 
+    }
 
 
 }

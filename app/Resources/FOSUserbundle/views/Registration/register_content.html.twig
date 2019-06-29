@@ -1,16 +1,43 @@
 {% trans_default_domain 'FOSUserBundle' %}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+      integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous"
+      xmlns="http://www.w3.org/1999/html">
+<!-- Custom-Files -->
+<link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+<!-- Bootstrap-CSS -->
+<link href="{{ asset('css/css_slider.css') }}" type="text/css" rel="stylesheet" media="all">
+<!-- banner slider -->
+<link rel="stylesheet" href="{{ asset('css/style.css') }}" type="text/css" media="all" />
+<!-- Style-CSS -->
+<link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
+<!-- Font-Awesome-Icons-CSS -->
+<!-- //Custom-Files -->
+
+<!-- Web-Fonts -->
+<link
+        href="{{ asset('//fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;subset=devanagari,latin-ext') }}"
+        rel="stylesheet">
+<link href="{{ asset('//fonts.googleapis.com/css?family=Hind:300,400,500,600,700&amp;subset=devanagari,latin-ext') }}"
+      rel="stylesheet">
+
+<link rel="stylesheet" href="{{ asset('bundles/fullcalendar/css/fullcalendar/fullcalendar.min.css') }}" />
+
 
 
 <div class="comment-top mt-5">
-    <h4>Enregistrer</h4>
+     <h4 style="text-align: center">Welcome / Bienvenu</h4>
     <div class="comment-bottom w3pvtsinfo_mail_grid_right">
         {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
                 <div class="form-group">
-                    {{ form_widget(form) }}
+                    {{ form_row(form.username, {'attr':{'type':'text','class':'form-control','placeholder':'Votre Nom d"utilisateur...'}}) }}
+                    {{ form_row(form.email, {'attr':{'type':'text','class':'form-control','placeholder':'Votre email...'}}) }}
+                    {{ form_row(form.plainPassword.first, {'attr':{'type':'text','class':'form-control','placeholder':'Mot de passe...'}}) }}
+                    {{ form_row(form.plainPassword.second, {'attr':{'type':'text','class':'form-control','placeholder':'Répéter le mot de passe...'}}) }}
+
                 </div>
 
                 <div class="nav-button">
-                    <input type="submit" value="{{ 'registration.submit'|trans }}" />
+                    <input class="btn btn-common" type="submit" value="{{ 'registration.submit'|trans }}" />
                 </div>
         {{ form_end(form) }}
     </div>

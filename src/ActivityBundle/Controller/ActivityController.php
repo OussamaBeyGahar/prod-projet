@@ -10,7 +10,10 @@ use ActivityBundle\Entity\Reports;
 use ActivityBundle\Form\ActivityType;
 use ActivityBundle\Form\RatingType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 class ActivityController extends Controller
 {
@@ -35,12 +38,26 @@ class ActivityController extends Controller
 
     }
 
-    public function displayAction(){
+    public function displayAction(Request $request){
         $activities=$this->getDoctrine()->getRepository(Activity::class)->findAll();
         $mostviewed=$this->getDoctrine()->getRepository(Activity::class)->mostviewed();
         $mostliked=$this->getDoctrine()->getRepository(Activity::class)->mostliked();
         $mostrated=$this->getDoctrine()->getRepository(Activity::class)->mostrated();
-        return $this->render('@Activity/activity/activitydisplay.html.twig', array('list'=>$activities,
+
+        /**
+         * @var $paginator \Knp\Component\Pager\Paginator
+         */
+        $paginator = $this->get('knp_paginator');
+        $res = $paginator->paginate(
+            $activities,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 3)
+
+
+        );
+
+
+        return $this->render('@Activity/activity/activitydisplay.html.twig', array('list'=>$res,
             'mostviewed'=>$mostviewed,'mostliked'=>$mostliked,'mostrated'=>$mostrated));
 
     }
@@ -223,24 +240,14 @@ class ActivityController extends Controller
 
     }
 
-    public function adminAction(){
-        $usersn = $this->getDoctrine()->getRepository(User::class)->userscount();
-        $cntlikes = $this->getDoctrine()->getRepository(Likes::class)->countlikes();
-        $cntact = $this->getDoctrine()->getRepository(Activity::class)->countact();
-        $sumact = $this->getDoctrine()->getRepository(Activity::class)->sumvu();
-        $usrs = $this->getDoctrine()->getRepository(User::class)->findAll();
-        $mostreported = $this->getDoctrine()->getRepository(Activity::class)-> mostreported();
-        $sumrep = $this->getDoctrine()->getRepository(Reports::class)->countreports();
-
-        return $this->render('@Activity/activity/admin.html.twig', array('usrs'=>$usersn,
-            'likes'=>$cntlikes,
-            'act'=>$cntact,
-            'sumact'=>$sumact,
-            'usrall'=>$usrs,
-            'reported'=>$mostreported,
-            'sumrep'=>$sumrep));
+    public function apidisplayAction(){
+        $tasks = $this->getDoctrine()->getRepository(Activity::class)->findAll();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($tasks);
+        return new JsonResponse($formatted);
 
     }
+
 
 
 }

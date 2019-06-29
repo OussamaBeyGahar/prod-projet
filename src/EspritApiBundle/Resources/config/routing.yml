@@ -1,6 +1,6 @@
 esprit_api_homepage:
     path:     /
-    defaults: { _controller: EspritApiBundle:Default:index }
+    defaults: { _controller: EspritApiBundle:Task:all }
 
 all:
     path:     /tasks/all
@@ -21,3 +21,7 @@ get_User:
 api_projects:
     prefix:     /api-projects
     resource: "@EspritApiBundle/Resources/config/routing/evenement.yml"
+
+activity_activity_apidisplay:
+    path:     /apidisplay
+    defaults: { _controller: EspritApiBundle:Task:apidisplay }

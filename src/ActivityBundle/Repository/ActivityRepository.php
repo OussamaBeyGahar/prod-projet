@@ -93,15 +93,15 @@ class ActivityRepository extends \Doctrine\ORM\EntityRepository
         $em = $this->getEntityManager();
 
         $rawQuery = '
-            SELECT b.nb AS rcount, a.*
+                    SELECT b.nb AS rcount, a.*,u.username
             FROM activity a, 
                 (SELECT 
                 idAct,
                 count(1) nb 
                 FROM reports l 
                 GROUP BY idAct
-                ) b
-            WHERE a.id = b.idAct AND CAST(b.nb AS INT) > 1
+                ) b, fos_user u
+            WHERE a.id = b.idAct AND b.nb >= 1 AND u.id = a.iduser
             ';
 
         $statement = $em->getConnection()->prepare($rawQuery);
@@ -112,4 +112,6 @@ class ActivityRepository extends \Doctrine\ORM\EntityRepository
         return $result;
 
     }
+
+
 }
